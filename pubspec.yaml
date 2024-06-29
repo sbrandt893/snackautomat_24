@@ -1,19 +1,29 @@
 name: snackautomat_24
-description: "A new Flutter project."
-publish_to: 'none'
+description: "A remake of my very first Flutter project, a snack vending machine."
+publish_to: "none"
 version: 0.1.0
 
 environment:
-  sdk: '>=3.4.1 <4.0.0'
+  sdk: ">=3.4.1 <4.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
+  cupertino_icons: ^1.0.8
+  flutter_riverpod: ^2.5.1
+  riverpod_annotation: ^2.3.5
+  uuid: ^4.4.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^3.0.0
+  riverpod_lint: ^2.3.10
+  custom_lint: ^0.6.4
+  test: ^1.25.2
 
 flutter:
   uses-material-design: true
+
+assets:
+  - assets/
