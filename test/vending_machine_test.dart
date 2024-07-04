@@ -5,7 +5,7 @@ void main() {
   test('Vending Machine', () {
     VendingMachine vendingMachine = VendingMachine.standard();
     expect(vendingMachine.id, isNotNull);
-    print('VendingMachine:\n');
+    print('VendingMachine: \n');
     print('VendingMachine.id: ${vendingMachine.id}');
     print('VendingMachine.name: ${vendingMachine.name}');
     print('CoinOutput: ${vendingMachine.coinOutput}\n');
