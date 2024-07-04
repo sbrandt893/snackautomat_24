@@ -11,14 +11,14 @@ import 'package:uuid/uuid.dart';
 class VendingMachine {
   final String id;
   final String name;
-  final SlotContainer slotContainer;
+  final List<Coin> coinOutput;
+  final CoinCache coinCache;
   final CoinCassette? coinCassette;
   final CoinSafe? coinSafe;
-  final CoinCache coinCache;
-  final List<Coin> coinOutput;
   final DataStorage dataStorage;
-  final VendingController vendingController;
   final ProductDispensor productDispensor;
+  final SlotContainer slotContainer;
+  final VendingController vendingController;
 
   VendingMachine({
     required this.name,
