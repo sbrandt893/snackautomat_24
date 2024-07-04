@@ -1,46 +1,32 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-class HoverBuilder extends StatefulWidget {
-  const HoverBuilder({
-    super.key,
+class HoverWrapper extends StatefulWidget {
+  const HoverWrapper({
     required this.builder,
-    this.onHoverChanged,
+    super.key,
   });
 
   final Widget Function(bool isHovered) builder;
-  final void Function(bool isHovered)? onHoverChanged;
 
   @override
-  State<HoverBuilder> createState() => _HoverBuilderState();
+  HoverWrapperState createState() => HoverWrapperState();
 }
 
-class _HoverBuilderState extends State<HoverBuilder> {
+class HoverWrapperState extends State<HoverWrapper> {
   bool _isHovered = false;
-
-  void _onEnter(PointerEvent event) {
-    setState(() {
-      _isHovered = true;
-    });
-    if (widget.onHoverChanged != null) {
-      widget.onHoverChanged!(true);
-    }
-  }
-
-  void _onExit(PointerEvent event) {
-    setState(() {
-      _isHovered = false;
-    });
-    if (widget.onHoverChanged != null) {
-      widget.onHoverChanged!(false);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return MouseRegion(
-      onEnter: _onEnter,
-      onExit: _onExit,
+      onEnter: (PointerEnterEvent event) => _onHoverChanged(enabled: true),
+      onExit: (PointerExitEvent event) => _onHoverChanged(enabled: false),
       child: widget.builder(_isHovered),
     );
+  }
+
+  void _onHoverChanged({required bool enabled}) {
+    setState(() {
+      _isHovered = enabled;
+    });
   }
 }

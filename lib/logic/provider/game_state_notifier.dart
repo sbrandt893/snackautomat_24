@@ -7,7 +7,6 @@ class GameStateNotifier extends StateNotifier<GameState> {
 
   void toggleHighlightedTooltips() {
     state = state.copyWith(highlightedTooltips: !state.highlightedTooltips);
-    print(state.highlightedTooltips);
   }
 
   void setCursor(CursorTypes cursorType) {
