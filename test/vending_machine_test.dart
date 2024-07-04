@@ -10,7 +10,7 @@ void main() {
     print('VendingMachine.name: ${vendingMachine.name}');
     print('CoinOutput: ${vendingMachine.coinOutput}\n');
 
-    print('SlotContainer:\n');
+    print('SlotContainer: \n');
     print('SlotContainer.slotRows: ${vendingMachine.slotContainer.slotRows}');
     print('SlotContainer.slotColumns: ${vendingMachine.slotContainer.slotColumns}');
     vendingMachine.slotContainer.slots.keys.forEach((key) {
