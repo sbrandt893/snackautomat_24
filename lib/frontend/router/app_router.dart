@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:snackautomat_24/frontend/screens/game_screen.dart';
+import 'package:snackautomat_24/frontend/screens/game_screen/game_screen.dart';
 import 'package:snackautomat_24/frontend/screens/home_screen.dart';
 import 'package:snackautomat_24/frontend/screens/settings_screen.dart';
 
@@ -19,17 +19,17 @@ class AppRouter {
       case 'settings':
         return MaterialPageRoute(builder: (_) => const SettingsScreen());
       case 'game':
-        return MaterialPageRoute(builder: (_) => const GameScreen());
+        return FadeOutRoute(page: const GameScreen());
       default:
         return MaterialPageRoute(builder: (_) => const HomeScreen());
     }
   }
 }
 
-class SlideFromTopRoute extends PageRouteBuilder {
+class FadeOutRoute extends PageRouteBuilder {
   final Widget page;
 
-  SlideFromTopRoute({required this.page})
+  FadeOutRoute({required this.page})
       : super(
           pageBuilder: (
             BuildContext context,
@@ -43,10 +43,10 @@ class SlideFromTopRoute extends PageRouteBuilder {
             Animation<double> secondaryAnimation,
             Widget child,
           ) =>
-              SlideTransition(
-            position: Tween<Offset>(
-              begin: const Offset(0, -1),
-              end: Offset.zero,
+              FadeTransition(
+            opacity: Tween<double>(
+              begin: 0.0,
+              end: 1.0,
             ).animate(animation),
             child: child,
           ),

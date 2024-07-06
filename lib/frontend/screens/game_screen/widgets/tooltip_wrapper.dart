@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class TooltipWrapper extends StatelessWidget {
@@ -18,8 +19,10 @@ class TooltipWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isMobile = defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android;
+
     return Stack(
-      clipBehavior: Clip.none, // Allows the tooltip to overflow
+      clipBehavior: Clip.none,
       children: [
         child,
         Positioned(
@@ -31,21 +34,20 @@ class TooltipWrapper extends StatelessWidget {
                 if (showTooltipIcon) tooltipIcon,
                 if (showTooltipName)
                   Positioned(
-                    top: 30,
-                    //cebter the text
-                    left: _calculateLeftOffset(tooltipName.length),
-                    // left: 10 - (tooltipName.length + 1) * 4.5,
+                    top: isMobile ? 30 : 45,
+                    left: isMobile ? _calculateLeftOffset(length: tooltipName.length, factor: 4.5) : _calculateLeftOffset(length: tooltipName.length, factor: 6.5),
                     child: Text(
                       tooltipName,
-                      style: const TextStyle(
-                        color: Color.fromARGB(255, 252, 217, 117),
-                        fontSize: 18,
+                      style: TextStyle(
+                        color: const Color.fromARGB(255, 252, 217, 117),
+                        fontSize: isMobile ? 18 : 24,
                         fontWeight: FontWeight.bold,
                         fontFamily: 'Roboto Mono',
                         shadows: [
-                          Shadow(
-                            offset: Offset(1, 1),
-                            blurRadius: 2,
+                          BoxShadow(
+                            offset: const Offset(5, 3),
+                            blurRadius: 5,
+                            color: Colors.black.withOpacity(0.9),
                           ),
                         ],
                       ),
@@ -59,10 +61,10 @@ class TooltipWrapper extends StatelessWidget {
 }
 
 // Calculate the left offset based on the length of the tooltip name
-double _calculateLeftOffset(int length) {
+double _calculateLeftOffset({required int length, required double factor}) {
   // This is an example adjustment factor; you may need to tweak it
-  double adjustmentFactor = 4.5;
-  double baseOffset = 13.0; // Base offset
+  double adjustmentFactor = factor;
+  double baseOffset = 13; // Base offset
 
   // Adjust the left offset based on the length of the tooltip name
   return baseOffset - (length * adjustmentFactor);

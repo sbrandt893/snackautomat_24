@@ -12,6 +12,10 @@ final appSettingsProvider = StateNotifierProvider<AppSettingsNotifier, AppSettin
   return AppSettingsNotifier();
 });
 
+final gameStateProvider = StateNotifierProvider<GameStateNotifier, GameState>((ref) {
+  return GameStateNotifier();
+});
+
 final vendingMachineProvider = StateNotifierProvider<VendingMachineNotifier, VendingMachine>((ref) {
   return VendingMachineNotifier();
 });
@@ -22,8 +26,4 @@ final coinSafeProvider = StateNotifierProvider<CoinSafeNotifier, CoinSafe>((ref)
 
 final coinCassetteProvider = StateNotifierProvider<CoinSafeNotifier, CoinSafe>((ref) {
   return CoinSafeNotifier();
-});
-
-final gameStateProvider = StateNotifierProvider<GameStateNotifier, GameState>((ref) {
-  return GameStateNotifier();
 });

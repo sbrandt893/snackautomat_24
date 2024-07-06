@@ -1,24 +1,20 @@
-import 'package:snackautomat_24/logic/provider/cursor_state_notifier.dart';
-
 class GameState {
+  final int currentPage;
   final bool highlightedTooltips;
-  final CursorTypes cursorType;
+  final bool isNight;
 
-  getCursotType() {
-    return cursorType;
-  }
+  GameState({this.highlightedTooltips = false, this.currentPage = 0, this.isNight = false});
 
-  GameState({this.highlightedTooltips = false, this.cursorType = CursorTypes.none});
-
-  GameState copyWith({bool? highlightedTooltips, CursorTypes? cursorType}) {
+  GameState copyWith({bool? highlightedTooltips, int? currentPage, bool? isNight}) {
     return GameState(
       highlightedTooltips: highlightedTooltips ?? this.highlightedTooltips,
-      cursorType: cursorType ?? this.cursorType,
+      currentPage: currentPage ?? this.currentPage,
+      isNight: isNight ?? this.isNight,
     );
   }
 
   @override
   String toString() {
-    return 'GameState(highlightedTooltips: $highlightedTooltips, cursor: $cursorType)';
+    return 'GameState(highlightedTooltips: $highlightedTooltips, currentPage: $currentPage, isNight: $isNight)';
   }
 }

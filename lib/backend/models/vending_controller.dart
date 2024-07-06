@@ -1,5 +1,13 @@
 import 'package:snackautomat_24/backend/models/product.dart';
 
+enum DisplayMessageTypes {
+  dmGreeting,
+  dmSelectProduct,
+  dmInsertCoin,
+  dmFarewell,
+  dmNoTranslation,
+}
+
 class VendingController {
   final String displayMessage;
   final Product? selectedProduct;
@@ -25,7 +33,7 @@ class VendingController {
 
   factory VendingController.standard() {
     return VendingController(
-      displayMessage: 'Hello there!',
+      displayMessage: DisplayMessageTypes.dmGreeting.name,
       cacheAmount: 0,
     );
   }
@@ -38,7 +46,7 @@ class VendingController {
   // selectProduct method
   VendingController selectProduct(Product product) {
     return VendingController(
-      displayMessage: 'Product selected: ${product.name}',
+      displayMessage: DisplayMessageTypes.dmInsertCoin.name,
       selectedProduct: product,
       cacheAmount: cacheAmount,
     );
