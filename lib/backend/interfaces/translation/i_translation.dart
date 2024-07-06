@@ -7,7 +7,11 @@ abstract class ITranslation {
   String get settingsScreenTitle;
 
   // vending machine display messages
-  String get displayMessageGreeting;
+  String get dmGreeting;
+  String get dmSelectProduct;
+  String get dmInsertCoin;
+  String get dmFarewell;
+  String get noTranslation;
 
   factory ITranslation.fromString(String languageCode) {
     switch (languageCode) {

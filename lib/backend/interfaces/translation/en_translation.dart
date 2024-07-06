@@ -10,5 +10,13 @@ class EnTranslation implements ITranslation {
 
   // vending machine display messages
   @override
-  String get displayMessageGreeting => 'Welcome!';
+  String get dmGreeting => 'Happy Vending!';
+  @override
+  String get dmSelectProduct => 'Please select a product';
+  @override
+  String get dmInsertCoin => 'Please insert coins';
+  @override
+  String get dmFarewell => 'Goodbye!';
+  @override
+  String get noTranslation => 'No translation found';
 }

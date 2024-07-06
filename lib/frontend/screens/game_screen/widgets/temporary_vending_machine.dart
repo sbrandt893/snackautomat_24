@@ -12,17 +12,17 @@ class _VendingMachineState extends ConsumerState<VendingMachineWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        decoration: const BoxDecoration(
-      // if hovered, change give highlighted shadow
-      boxShadow: [
-        BoxShadow(
-          color: Colors.black54,
-          offset: Offset(5, 0),
-          blurRadius: 5,
-        ),
-      ],
-
-      color: Colors.blueGrey,
-    ));
+      decoration: const BoxDecoration(
+        // if hovered, change give highlighted shadow
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black54,
+            offset: Offset(5, 0),
+            blurRadius: 5,
+          ),
+        ],
+      ),
+      child: Image.asset('assets/images/backgrounds/vending_machine_comic.png', fit: BoxFit.fill),
+    );
   }
 }

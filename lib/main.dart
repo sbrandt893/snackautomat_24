@@ -17,6 +17,10 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    precacheImage(const AssetImage('assets/images/backgrounds/uptown.jpg'), context);
+    precacheImage(const AssetImage('assets/images/backgrounds/uptown2.jpg'), context);
+    precacheImage(const AssetImage('assets/images/backgrounds/vending_machine_comic.png'), context);
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       initialRoute: Routes.home.name,
