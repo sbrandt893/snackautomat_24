@@ -3,6 +3,8 @@ import 'package:snackautomat_24/backend/models/coin_cache.dart';
 import 'package:snackautomat_24/backend/models/coin_cassette.dart';
 import 'package:snackautomat_24/backend/models/coin_safe.dart';
 import 'package:snackautomat_24/backend/models/data_storage.dart';
+import 'package:snackautomat_24/backend/models/glas_pane.dart';
+import 'package:snackautomat_24/backend/models/nullable_wrapper.dart';
 import 'package:snackautomat_24/backend/models/product_dispensor.dart';
 import 'package:snackautomat_24/backend/models/slot_container.dart';
 import 'package:snackautomat_24/backend/models/vending_controller.dart';
@@ -19,6 +21,7 @@ class VendingMachine {
   final ProductDispensor productDispensor;
   final SlotContainer slotContainer;
   final VendingController vendingController;
+  final GlassPane? glassPane;
 
   VendingMachine({
     required this.name,
@@ -30,6 +33,7 @@ class VendingMachine {
     required this.dataStorage,
     required this.vendingController,
     required this.productDispensor,
+    required this.glassPane,
   }) : id = const Uuid().v4();
 
   VendingMachine copyWith({
@@ -42,6 +46,7 @@ class VendingMachine {
     DataStorage? dataStorage,
     VendingController? vendingController,
     ProductDispensor? productDispensor,
+    Wrapper<GlassPane?>? glassPane,
   }) {
     return VendingMachine(
       name: name ?? this.name,
@@ -53,13 +58,14 @@ class VendingMachine {
       dataStorage: dataStorage ?? this.dataStorage,
       vendingController: vendingController ?? this.vendingController,
       productDispensor: productDispensor ?? this.productDispensor,
+      glassPane: glassPane != null ? glassPane.value : this.glassPane,
     );
   }
 
   factory VendingMachine.standard() {
     return VendingMachine(
       name: 'Vending Machine (Standard-Model)',
-      slotContainer: SlotContainer.r9c11(),
+      slotContainer: SlotContainer.r6c6(),
       coinCassette: CoinCassette.standardFilled(),
       coinSafe: CoinSafe.empty(),
       coinCache: CoinCache.empty(),
@@ -67,11 +73,18 @@ class VendingMachine {
       dataStorage: DataStorage.empty(),
       vendingController: VendingController.standard(),
       productDispensor: ProductDispensor.empty(),
+      glassPane: GlassPane.standard(),
+    );
+  }
+
+  VendingMachine removeGlassPane() {
+    return copyWith(
+      glassPane: Wrapper(null),
     );
   }
 
   @override
   String toString() {
-    return 'VendingMachine{id: $id, name: $name, slotContainer: $slotContainer, coinCassette: $coinCassette, coinSafe: $coinSafe, coinCache: $coinCache, coinOutput: $coinOutput, dataStorage: $dataStorage, vendingController: $vendingController, productDispensor: $productDispensor}';
+    return 'VendingMachine(id: $id, name: $name, coinOutput: $coinOutput, coinCache: $coinCache, coinCassette: $coinCassette, coinSafe: $coinSafe, dataStorage: $dataStorage, productDispensor: $productDispensor, slotContainer: $slotContainer, vendingController: $vendingController, glassPane: $glassPane)';
   }
 }

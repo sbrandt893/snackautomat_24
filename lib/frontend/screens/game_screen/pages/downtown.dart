@@ -16,6 +16,7 @@ class Downtown extends ConsumerWidget {
         const SizedBox(height: 20),
         ElevatedButton(
           onPressed: () {
+            ref.read(vendingMachineProvider.notifier).repairGlassPane();
             ref.read(gameStateProvider.notifier).setCurrentPage(0);
           },
           child: const Text('Back to Uptown'),
