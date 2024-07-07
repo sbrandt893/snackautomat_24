@@ -12,7 +12,7 @@ void main() {
 
     print('SlotContainer: \n');
     print('SlotContainer.slotRows: ${vendingMachine.slotContainer.slotRows}');
-    print('SlotContainer.slotColumns: ${vendingMachine.slotContainer.slotColumns}');
+    print('SlotContainer.slotColumns: ${vendingMachine.slotContainer.slotCols}');
     vendingMachine.slotContainer.slots.keys.forEach((key) {
       print('SlotContainer.slots: $key');
     });
