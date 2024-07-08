@@ -9,6 +9,7 @@ import 'package:snackautomat_24/backend/models/slot.dart';
 import 'package:snackautomat_24/backend/models/vending_controller.dart';
 import 'package:snackautomat_24/backend/models/vending_machine.dart';
 import 'package:snackautomat_24/frontend/screens/game_screen/widgets/new_vending_machine_exit_button.dart';
+import 'package:snackautomat_24/frontend/screens/game_screen/widgets/numpad.dart';
 import 'package:snackautomat_24/frontend/screens/game_screen/widgets/scrolling_text_container.dart';
 import 'package:snackautomat_24/logic/provider/all_provider.dart';
 
@@ -21,9 +22,6 @@ class NewVendingMachineCloseup extends ConsumerStatefulWidget {
 
 class _NewVendingMachineCloseupState extends ConsumerState<NewVendingMachineCloseup> {
   bool _isHammerEquipped = false;
-  // int _glassPaneHealth = 100;
-  // bool _isGlassPaneVisible = true;
-  // final List<Offset> _cracks = [];
 
   @override
   Widget build(BuildContext context) {
@@ -338,7 +336,6 @@ class _NewVendingMachineCloseupState extends ConsumerState<NewVendingMachineClos
                               Flexible(
                                 flex: 2,
                                 child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.stretch,
                                   children: [
                                     Expanded(
                                       child: Container(
@@ -353,17 +350,19 @@ class _NewVendingMachineCloseupState extends ConsumerState<NewVendingMachineClos
                                           ),
                                         ),
                                         child: Column(
+                                          mainAxisAlignment: MainAxisAlignment.start,
                                           children: [
                                             SizedBox(
                                               height: vendingMachineHeight * 0.15,
                                             ),
+                                            //? display
                                             Flexible(
                                               child: Container(
-                                                margin: const EdgeInsets.all(10),
+                                                margin: EdgeInsets.all(vendingMachineWidth * 0.02),
                                                 height: vendingMachineHeight * 0.07,
                                                 width: vendingMachineWidth,
                                                 decoration: BoxDecoration(
-                                                  color: Colors.green.shade200, // Chrysler Platinum Silver
+                                                  color: Colors.blue.shade100,
                                                   border: Border.all(width: 2, color: Colors.blueGrey.shade700),
                                                 ),
                                                 child: FittedBox(
@@ -375,14 +374,25 @@ class _NewVendingMachineCloseupState extends ConsumerState<NewVendingMachineClos
                                                 ),
                                               ),
                                             ),
+                                            //? numpad
                                             Flexible(
                                               child: Container(
-                                                margin: const EdgeInsets.all(10),
-                                                height: vendingMachineHeight * 0.2,
-                                                width: vendingMachineWidth,
+                                                height: vendingMachineHeight * 0.3,
+                                                margin: EdgeInsets.all(vendingMachineWidth * 0.02),
                                                 decoration: BoxDecoration(
-                                                  color: Colors.blueGrey.shade300,
-                                                  border: Border.all(width: 2, color: Colors.blueGrey.shade600),
+                                                  border: Border.all(width: 2, color: Colors.blueGrey.shade700),
+                                                ),
+                                                child: Stack(
+                                                  children: [
+                                                    VendingMachineNumpad(
+                                                      onProductSelect: (String slotNumber) {},
+                                                      onConfirm: () {},
+                                                      onCancel: () {},
+                                                    ),
+                                                    Container(
+                                                      color: Colors.transparent,
+                                                    ),
+                                                  ],
                                                 ),
                                               ),
                                             ),
