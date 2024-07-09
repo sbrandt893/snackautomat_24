@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:snackautomat_24/frontend/screens/game_screen/game_screen.dart';
+import 'package:snackautomat_24/frontend/screens/game/game_screen.dart';
 import 'package:snackautomat_24/logic/provider/all_provider.dart';
 
 class NewVendingMachineExitButton extends StatelessWidget {

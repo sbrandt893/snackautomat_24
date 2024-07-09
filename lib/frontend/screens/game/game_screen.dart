@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:snackautomat_24/backend/models/game_state.dart';
-import 'package:snackautomat_24/frontend/screens/game_screen/pages/downtown.dart';
-import 'package:snackautomat_24/frontend/screens/game_screen/pages/new_vending_machine_closeup.dart';
-import 'package:snackautomat_24/frontend/screens/game_screen/pages/uptown.dart';
-import 'package:snackautomat_24/frontend/screens/game_screen/widgets/custom_bottom_appbar.dart';
+import 'package:snackautomat_24/frontend/screens/game/pages/downtown.dart';
+import 'package:snackautomat_24/frontend/screens/game/pages/new_vending_machine_closeup.dart';
+import 'package:snackautomat_24/frontend/screens/game/pages/uptown.dart';
+import 'package:snackautomat_24/frontend/screens/game/widgets/custom_bottom_appbar.dart';
 import 'package:snackautomat_24/logic/provider/all_provider.dart';
 
 enum Pages {
@@ -26,7 +26,8 @@ class _HomeScreenState extends ConsumerState<GameScreen> {
   @override
   void initState() {
     super.initState();
-    pageController = PageController(initialPage: ref.read(gameStateProvider).currentPage);
+    pageController =
+        PageController(initialPage: ref.read(gameStateProvider).currentPage);
   }
 
   @override
@@ -38,7 +39,8 @@ class _HomeScreenState extends ConsumerState<GameScreen> {
         controller: pageController,
         children: [
           AnimatedSwitcher(
-              transitionBuilder: (child, animation) => FadeTransition(opacity: animation, child: child),
+              transitionBuilder: (child, animation) =>
+                  FadeTransition(opacity: animation, child: child),
               duration: const Duration(milliseconds: 500),
               child: _getPageFromIndex(gameState.currentPage)),
         ],

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:snackautomat_24/frontend/screens/game_screen/game_screen.dart';
-import 'package:snackautomat_24/frontend/screens/home_screen.dart';
-import 'package:snackautomat_24/frontend/screens/settings_screen.dart';
+import 'package:snackautomat_24/frontend/screens/game/game_screen.dart';
+import 'package:snackautomat_24/frontend/screens/home/home_screen.dart';
+import 'package:snackautomat_24/frontend/screens/settings/settings_screen.dart';
 
 enum Routes {
   home,

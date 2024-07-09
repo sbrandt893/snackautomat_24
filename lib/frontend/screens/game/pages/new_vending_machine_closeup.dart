@@ -8,10 +8,10 @@ import 'package:snackautomat_24/backend/models/product.dart';
 import 'package:snackautomat_24/backend/models/slot.dart';
 import 'package:snackautomat_24/backend/models/vending_controller.dart';
 import 'package:snackautomat_24/backend/models/vending_machine.dart';
-import 'package:snackautomat_24/frontend/screens/game_screen/widgets/broken_glass_pane.dart';
-import 'package:snackautomat_24/frontend/screens/game_screen/widgets/new_vending_machine_exit_button.dart';
-import 'package:snackautomat_24/frontend/screens/game_screen/widgets/numpad.dart';
-import 'package:snackautomat_24/frontend/screens/game_screen/widgets/scrolling_text_container.dart';
+import 'package:snackautomat_24/frontend/screens/game/widgets/broken_glass_pane.dart';
+import 'package:snackautomat_24/frontend/screens/game/widgets/new_vending_machine_exit_button.dart';
+import 'package:snackautomat_24/frontend/screens/game/widgets/numpad.dart';
+import 'package:snackautomat_24/frontend/screens/game/widgets/scrolling_text_container.dart';
 import 'package:snackautomat_24/logic/provider/all_provider.dart';
 
 class NewVendingMachineCloseup extends ConsumerStatefulWidget {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:snackautomat_24/frontend/screens/game_screen/widgets/numpad.dart';
+import 'package:snackautomat_24/frontend/screens/game/widgets/numpad.dart';
 
 class AnimatedNumpad extends StatefulWidget {
   final double vendingMachineHeight;
