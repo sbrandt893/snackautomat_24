@@ -1,22 +1,30 @@
-import 'package:flutter/material.dart';
+import 'dart:io';
 
-class VendingMachineNumpad extends StatefulWidget {
-  final Function(String) onProductSelect;
-  final VoidCallback onConfirm;
-  final VoidCallback onCancel;
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:snackautomat_24/logic/provider/all_provider.dart';
+
+class VendingMachineNumpad extends ConsumerStatefulWidget {
+  final double height;
+  final double width;
+  // final Function(String) onProductSelect;
+  // final VoidCallback onConfirm;
+  // final VoidCallback onCancel;
 
   const VendingMachineNumpad({
     super.key,
-    required this.onProductSelect,
-    required this.onConfirm,
-    required this.onCancel,
+    // required this.onProductSelect,
+    // required this.onConfirm,
+    // required this.onCancel,
+    required this.height,
+    required this.width,
   });
 
   @override
   VendingMachineNumpadState createState() => VendingMachineNumpadState();
 }
 
-class VendingMachineNumpadState extends State<VendingMachineNumpad> {
+class VendingMachineNumpadState extends ConsumerState<VendingMachineNumpad> {
   final TextEditingController _controller = TextEditingController();
 
   @override
@@ -30,7 +38,7 @@ class VendingMachineNumpadState extends State<VendingMachineNumpad> {
       if (_controller.text.length < 3) {
         _controller.text += value;
         if (_controller.text.length >= 2) {
-          widget.onProductSelect(_controller.text);
+          ref.read(vendingMachineProvider.notifier).selectSlot(slotNumber: _controller.text);
         }
       }
     });
@@ -40,35 +48,47 @@ class VendingMachineNumpadState extends State<VendingMachineNumpad> {
     if (_controller.text.isNotEmpty) {
       setState(() {
         _controller.text = _controller.text.substring(0, _controller.text.length - 1);
+        ref.read(vendingMachineProvider.notifier).selectSlot(slotNumber: _controller.text);
       });
     }
   }
 
-  void _onCancel() {
+  Future<void> _onCancel() async {
     setState(() {
       _controller.clear();
+      ref.read(vendingMachineProvider.notifier).cancelTransaction();
     });
-    widget.onCancel();
+    await Future.delayed(const Duration(milliseconds: 2500));
+    setState(() {
+      ref.read(vendingMachineProvider.notifier).resetControlPanel();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return Container(
-          color: Colors.blueGrey.shade300,
-          padding: const EdgeInsets.all(5),
-          child: Column(
-            children: [
-              SizedBox(
-                height: constraints.maxHeight * 0.09,
+    return Container(
+      height: widget.height,
+      width: widget.width,
+      decoration: BoxDecoration(
+        color: Colors.blueGrey.shade400,
+        border: Border.all(width: 2, color: Colors.blueGrey.shade700),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          //? Input field
+          Expanded(
+            flex: 10,
+            child: FittedBox(
+              child: Container(
+                padding: const EdgeInsets.all(3),
+                width: widget.width * 0.7,
+                height: widget.height * 0.1,
                 child: TextField(
                   controller: _controller,
                   readOnly: true,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: constraints.maxHeight * 0.05,
-                  ),
+                  style: TextStyle(fontSize: widget.height * 0.05),
                   decoration: InputDecoration(
                     border: const OutlineInputBorder(),
                     filled: true,
@@ -77,80 +97,64 @@ class VendingMachineNumpadState extends State<VendingMachineNumpad> {
                   ),
                 ),
               ),
-              SizedBox(height: constraints.maxHeight * 0.01),
-              Flexible(
-                // flex: 6,
-                child: Column(
-                  children: [
-                    ...[
-                      ['A', 'B', 'C'],
-                      ['D', 'E', 'F'],
-                      ['G', 'H', 'I'],
-                      ['1', '2', '3'],
-                      ['4', '5', '6'],
-                      ['7', '8', '9'],
-                      ['0', 'DEL', 'OK'],
-                    ].map((row) => Expanded(child: _buildRow(row, constraints))),
-                    Expanded(
-                      child: Row(
-                        children: [
-                          Expanded(child: Container()), // Leerer Platzhalter
-                          Expanded(child: Container()), // Leerer Platzhalter
-                          Expanded(child: _buildButton(label: 'CAN', constraints: constraints)),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+            ),
           ),
-        );
-      },
+          //? Numpad
+          Expanded(
+            flex: 90,
+            child: GridView.count(
+              physics: const NeverScrollableScrollPhysics(),
+              crossAxisCount: 3,
+              padding: const EdgeInsets.all(5),
+              mainAxisSpacing: 4,
+              crossAxisSpacing: 4,
+              children: [
+                ...'ABCDEFGHI'.split('').map((label) => _buildButton(label: label)),
+                ...'123456789'.split('').map((label) => _buildButton(label: label)),
+                _buildButton(label: '0'),
+                _buildButton(label: 'DEL', color: Colors.orange),
+                _buildButton(label: 'OK', color: Colors.green),
+                const SizedBox(),
+                const SizedBox(),
+                _buildButton(label: 'CAN', color: Colors.red),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 
-  Widget _buildRow(List<String> buttons, BoxConstraints constraints) {
-    return Row(
-      children: buttons.map((button) => Expanded(child: _buildButton(label: button, constraints: constraints))).toList(),
-    );
-  }
-
-  Widget _buildButton({required String label, required BoxConstraints constraints}) {
+  Widget _buildButton({required String label, Color? color}) {
     VoidCallback onPressed;
-    Color color;
 
     switch (label) {
       case 'DEL':
         onPressed = _onDelete;
-        color = Colors.orange;
         break;
       case 'OK':
-        onPressed = widget.onConfirm;
-        color = Colors.green;
+        onPressed = () {};
         break;
       case 'CAN':
         onPressed = _onCancel;
-        color = Colors.red;
         break;
       default:
         onPressed = () => _onInput(label);
-        color = const Color.fromARGB(255, 205, 213, 224); // Chrysler Platinum Silver
     }
 
-    return Padding(
-      padding: const EdgeInsets.all(2),
-      child: ElevatedButton(
-        onPressed: onPressed,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: color,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-          padding: EdgeInsets.zero,
-        ),
-        child: FittedBox(
-          fit: BoxFit.scaleDown,
-          child: Text(label),
-        ),
+    return ElevatedButton(
+      onPressed: onPressed,
+      style: ElevatedButton.styleFrom(
+        backgroundColor: color ?? Colors.blueGrey.shade500,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+        padding: EdgeInsets.zero,
+      ),
+      child: FittedBox(
+        child: Text(label,
+            style: const TextStyle(
+              color: Colors.black,
+              fontSize: 17,
+            )),
       ),
     );
   }

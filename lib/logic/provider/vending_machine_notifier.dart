@@ -66,4 +66,53 @@ class VendingMachineNotifier extends StateNotifier<VendingMachine> {
       glassPane: Wrapper(null),
     );
   }
+
+  void selectSlot({required String slotNumber}) {
+    String message = '';
+    final slot = state.slotContainer.slots[slotNumber];
+    if (slot == null) {
+      message = 'Slot $slotNumber does not exist';
+    } else if (slot.product == null || slot.productQuantity <= 0) {
+      message = 'Slot $slotNumber is empty';
+    } else {
+      message = 'Slot $slotNumber selected';
+    }
+
+    state = state.copyWith(
+      vendingController: state.vendingController.copyWith(
+        displayMessage: message,
+        selectedSlot: Wrapper(slot),
+      ),
+    );
+
+    print('slot: $slot');
+  }
+
+  void cancelTransaction() {
+    state = state.copyWith(
+      vendingController: state.vendingController.copyWith(
+        displayMessage: 'Transaction canceled',
+        selectedSlot: Wrapper(null),
+      ),
+    );
+  }
+
+  void resetControlPanel() {
+    state = state.copyWith(
+      vendingController: state.vendingController.copyWith(
+        displayMessage: 'Happy Vending 3242424',
+      ),
+    );
+  }
+
+  // void getDisplayMessage() {
+  //   String nextMessage = '';
+  //   if (){}
+
+  //   state = state.copyWith(
+  //     vendingController: state.vendingController.copyWith(
+  //       displayMessage: 'Hello',
+  //     ),
+  //   );
+  // }
 }

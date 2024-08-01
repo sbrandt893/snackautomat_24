@@ -5,10 +5,10 @@ class BrokenGlassPane extends StatelessWidget {
   final double height;
 
   const BrokenGlassPane({
-    Key? key,
+    super.key,
     required this.width,
     required this.height,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

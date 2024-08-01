@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const _glassPane_null = Object();
+// const _glassPane_null = Object();
 
 class GlassPane {
   final String name;
