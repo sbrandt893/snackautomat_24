@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:snackautomat_24/backend/models/app_settings.dart';
 import 'package:snackautomat_24/backend/models/coin_cassette.dart';
@@ -5,6 +6,7 @@ import 'package:snackautomat_24/backend/models/coin_safe.dart';
 import 'package:snackautomat_24/backend/models/game_state.dart';
 import 'package:snackautomat_24/backend/models/glas_pane.dart';
 import 'package:snackautomat_24/backend/models/vending_machine.dart';
+import 'package:snackautomat_24/logic/provider/synced_scroll_controllers.dart';
 import 'package:snackautomat_24/logic/provider/app_settings_notifier.dart';
 import 'package:snackautomat_24/logic/provider/coin_cassette_notifier.dart';
 import 'package:snackautomat_24/logic/provider/coin_safe_notifier.dart';

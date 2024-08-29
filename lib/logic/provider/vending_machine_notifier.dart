@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:snackautomat_24/backend/models/nullable_wrapper.dart';
 import 'package:snackautomat_24/backend/models/product.dart';
+import 'package:snackautomat_24/backend/models/slot.dart';
+import 'package:snackautomat_24/backend/models/vending_controller.dart';
 import 'package:snackautomat_24/backend/models/vending_machine.dart';
 
 class VendingMachineNotifier extends StateNotifier<VendingMachine> {
@@ -77,10 +79,11 @@ class VendingMachineNotifier extends StateNotifier<VendingMachine> {
     } else {
       message = 'Slot $slotNumber selected';
     }
-
+    print('slot state: $slot');
     state = state.copyWith(
       vendingController: state.vendingController.copyWith(
         displayMessage: message,
+        numberInput: slotNumber,
         selectedSlot: Wrapper(slot),
       ),
     );
@@ -89,6 +92,7 @@ class VendingMachineNotifier extends StateNotifier<VendingMachine> {
   }
 
   void cancelTransaction() {
+    print('cancelTransaction');
     state = state.copyWith(
       vendingController: state.vendingController.copyWith(
         displayMessage: 'Transaction canceled',
@@ -100,19 +104,42 @@ class VendingMachineNotifier extends StateNotifier<VendingMachine> {
   void resetControlPanel() {
     state = state.copyWith(
       vendingController: state.vendingController.copyWith(
-        displayMessage: 'Happy Vending 3242424',
+        displayMessage: 'Happy Vending 😊',
       ),
     );
   }
 
-  // void getDisplayMessage() {
-  //   String nextMessage = '';
-  //   if (){}
+  void updateControlPanel({required String slotNumber}) {
+    final slot = state.slotContainer.slots[slotNumber];
+    print('slot: $slot');
+    state = state.copyWith(
+      vendingController: state.vendingController.copyWith(
+        numberInput: slotNumber,
+        selectedSlot: Wrapper(slot),
+      ),
+    );
+  }
 
-  //   state = state.copyWith(
-  //     vendingController: state.vendingController.copyWith(
-  //       displayMessage: 'Hello',
-  //     ),
-  //   );
-  // }
+  String getDisplayMessage({
+    required int cashAmount,
+    required String numberInput,
+    required Slot? slot,
+  }) {
+    String displayMessage = state.vendingController.displayMessage;
+
+    if (state.vendingController.displayMessage == DisplayMessageTypes.dmSelectProduct.name) {
+      if (slot == null) {
+        displayMessage = 'Slot $numberInput does not exist';
+      } else if (slot.product == null || slot.productQuantity <= 0) {
+        displayMessage = 'Slot $numberInput is empty';
+      } else {
+        displayMessage = 'Slot $numberInput selected';
+      }
+    } else if (state.vendingController.displayMessage == DisplayMessageTypes.dmInsertCoin.name) {
+      displayMessage = 'Inserted $cashAmount €';
+    } else if (state.vendingController.displayMessage == DisplayMessageTypes.dmNoTranslation.name) {
+      displayMessage = 'No translation available';
+    }
+    return displayMessage;
+  }
 }

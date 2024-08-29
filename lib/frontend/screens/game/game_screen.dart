@@ -26,8 +26,7 @@ class _HomeScreenState extends ConsumerState<GameScreen> {
   @override
   void initState() {
     super.initState();
-    pageController =
-        PageController(initialPage: ref.read(gameStateProvider).currentPage);
+    pageController = PageController(initialPage: ref.read(gameStateProvider).currentPage);
   }
 
   @override
@@ -39,8 +38,7 @@ class _HomeScreenState extends ConsumerState<GameScreen> {
         controller: pageController,
         children: [
           AnimatedSwitcher(
-              transitionBuilder: (child, animation) =>
-                  FadeTransition(opacity: animation, child: child),
+              transitionBuilder: (child, animation) => FadeTransition(opacity: animation, child: child),
               duration: const Duration(milliseconds: 500),
               child: _getPageFromIndex(gameState.currentPage)),
         ],
@@ -61,12 +59,12 @@ class _HomeScreenState extends ConsumerState<GameScreen> {
 Widget _getPageFromIndex(int index) {
   switch (Pages.values[index]) {
     case Pages.uptown:
-      return const Uptown();
+      return Uptown();
     case Pages.downtown:
       return const Downtown();
     case Pages.newVendingMachineCloseup:
       return const NewVendingMachineCloseup();
     default:
-      return const Uptown();
+      return Uptown();
   }
 }

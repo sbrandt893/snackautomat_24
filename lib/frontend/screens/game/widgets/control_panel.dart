@@ -3,11 +3,17 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:snackautomat_24/backend/models/slot.dart';
 import 'package:snackautomat_24/backend/models/vending_machine.dart';
 import 'package:snackautomat_24/frontend/screens/game/widgets/coin_slot_area.dart';
+import 'package:snackautomat_24/frontend/screens/game/widgets/display.dart';
 import 'package:snackautomat_24/frontend/screens/game/widgets/numpad.dart';
 import 'package:snackautomat_24/logic/provider/all_provider.dart';
 
 class ControlPanel extends ConsumerWidget {
-  const ControlPanel({super.key});
+  final int textControllerId;
+
+  const ControlPanel({
+    super.key,
+    required this.textControllerId,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -27,94 +33,15 @@ class ControlPanel extends ConsumerWidget {
           child: Column(
             // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
+              //? Display
               Expanded(
                 flex: 15,
-                child: Container(
-                  // margin: const EdgeInsets.only(left: 33, right: 33),
-                  decoration: BoxDecoration(
-                    color: Colors.blue.shade100,
-                    border: Border.all(width: 4, color: Colors.blueGrey.shade700),
-                  ),
-                  child: Column(
-                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Expanded(
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            FittedBox(
-                              fit: BoxFit.scaleDown,
-                              alignment: Alignment.topLeft,
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 5),
-                                child: Text(
-                                  'Slot: ${selectedSlot?.slotNumber ?? '-'}',
-                                  textAlign: TextAlign.start,
-                                  style: const TextStyle(fontSize: 14),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Expanded(
-                        child: FittedBox(
-                          fit: BoxFit.cover,
-                          child: ScrollingTextContainer(
-                            text: vendingMachine.vendingController.displayMessage,
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: Row(
-                          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Expanded(
-                              child: FittedBox(
-                                fit: BoxFit.scaleDown,
-                                alignment: Alignment.centerLeft,
-                                child: SizedBox(
-                                  width: 110,
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(left: 5),
-                                    child: Text(
-                                      selectedSlot?.product != null ? 'Price: ${selectedSlot!.product!.price / 100}€' : 'Price: -',
-                                      style: const TextStyle(fontSize: 18),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              child: FittedBox(
-                                fit: BoxFit.scaleDown,
-                                alignment: Alignment.centerLeft,
-                                child: SizedBox(
-                                  width: 110,
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(left: 5),
-                                    child: Text(
-                                      'Paid: ${(vendingMachine.vendingController.cacheAmount / 100).toStringAsFixed(2)}€',
-                                      style: const TextStyle(fontSize: 18),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                child: Display(textControllerId: textControllerId),
               ),
               //? Numpad
               Expanded(
                 flex: 75,
                 child: FittedBox(
-                  // fit: BoxFit.scaleDown,
                   child: Container(
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     width: 133,
@@ -122,19 +49,14 @@ class ControlPanel extends ConsumerWidget {
                     child: const VendingMachineNumpad(
                       width: 100,
                       height: 275,
-                      // onProductSelect: (String slotNumber) {},
-                      // onConfirm: () {},
-                      // onCancel: () {},
                     ),
                   ),
                 ),
               ),
-              Expanded(
+              //? Coin Slot Area
+              const Expanded(
                 flex: 10,
-                child: Container(
-                  // padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: const CoinSlotArea(size: 55),
-                ),
+                child: CoinSlotArea(size: 55),
               ),
             ],
           ),

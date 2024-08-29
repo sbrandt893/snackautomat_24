@@ -31,11 +31,14 @@ class _SpiralPainter extends CustomPainter {
   _SpiralPainter({required this.color, required this.isLeftFacing});
 
   @override
-  void paint(Canvas canvas, Size size) {
+  void paint(
+    Canvas canvas,
+    Size size,
+  ) {
     final paint = Paint()
       ..color = color
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 2.0;
+      ..strokeWidth = size.width / 13;
 
     final centerX = size.width / 2;
     final centerY = size.height;

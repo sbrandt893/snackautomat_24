@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:snackautomat_24/frontend/screens/game/widgets/inventory.dart';
+import 'package:snackautomat_24/logic/provider/all_provider.dart';
 
 class CoinSlotArea extends ConsumerWidget {
   final double size;
@@ -39,7 +41,14 @@ class CoinSlotArea extends ConsumerWidget {
             child: FittedBox(
               child: InkWell(
                 onTap: () {
-                  // ref.read(vendingMachineProvider.notifier).insertCoin(0.1);
+                  ref.read(gameStateProvider.notifier).toggleInventoryView();
+                  // showDialog(
+                  //   context: context,
+                  //   builder: (context) => Container(
+                  //     padding: const EdgeInsets.all(20),
+                  //     child: InventoryContainer(),
+                  //   ),
+                  // );
                 },
                 child: Container(
                   height: size,
