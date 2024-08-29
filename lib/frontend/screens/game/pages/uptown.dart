@@ -1,20 +1,26 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:snackautomat_24/backend/models/game_state.dart';
-import 'package:snackautomat_24/frontend/screens/game_screen/game_screen.dart';
-import 'package:snackautomat_24/frontend/screens/game_screen/widgets/animated_arrow_right.dart';
-import 'package:snackautomat_24/frontend/screens/game_screen/widgets/hover_widget.dart';
-import 'package:snackautomat_24/frontend/screens/game_screen/widgets/swing_animation.dart';
-import 'package:snackautomat_24/frontend/screens/game_screen/widgets/tooltip_wrapper.dart';
-import 'package:snackautomat_24/frontend/screens/game_screen/widgets/temporary_vending_machine.dart';
+import 'package:snackautomat_24/frontend/screens/game/game_screen.dart';
+import 'package:snackautomat_24/frontend/screens/game/widgets/animated_arrow_right.dart';
+import 'package:snackautomat_24/frontend/screens/game/widgets/hover_widget.dart';
+import 'package:snackautomat_24/frontend/screens/game/widgets/new_vending_machine.dart';
+import 'package:snackautomat_24/frontend/screens/game/widgets/swing_animation.dart';
+import 'package:snackautomat_24/frontend/screens/game/widgets/tooltip_wrapper.dart';
 import 'package:snackautomat_24/logic/provider/all_provider.dart';
 
-class Uptown extends ConsumerWidget {
-  const Uptown({super.key});
+class Uptown extends ConsumerStatefulWidget {
+  Uptown({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<Uptown> createState() => _UptownState();
+}
+
+class _UptownState extends ConsumerState<Uptown> {
+  @override
+  Widget build(BuildContext context) {
     GameState gameState = ref.watch(gameStateProvider);
     bool isMobile = defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android;
     bool isNight = gameState.isNight;
@@ -34,7 +40,8 @@ class Uptown extends ConsumerWidget {
                       <double>[
                         0.1, 0, 0, 0, 0, // Red
                         0, 0.1, 0, 0, 0, // Green
-                        0, 0, 0.3, 0, 0, // Blue (slightly higher to give a bluish tint)
+                        0, 0, 0.3, 0,
+                        0, // Blue (slightly higher to give a bluish tint)
                         0, 0, 0, 1, 0,
                       ],
                     )
@@ -74,15 +81,30 @@ class Uptown extends ConsumerWidget {
                   showTooltipIcon: isHovered || gameState.highlightedTooltips,
                   showTooltipName: isHovered || (gameState.highlightedTooltips && isMobile),
                   child: SizedBox(
-                    width: 100,
-                    height: MediaQuery.of(context).size.height * 0.24, // 40% der Bildschirmhöhe
-                    child: const VendingMachineWidget(),
+                    width: 150,
+                    height: MediaQuery.of(context).size.height * 0.24,
+                    child: Center(
+                      child: AspectRatio(
+                        aspectRatio: 3 / 5,
+                        child: Padding(
+                          padding: const EdgeInsets.all(0),
+                          child: Stack(
+                            clipBehavior: Clip.none,
+                            children: [
+                              const NewVendingMachine(textControllerId: 0, smallView: true),
+                              Container(color: Colors.blue.withOpacity(0.1)),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                 );
               },
             ),
           ),
-        ), //? Arrow top left
+        ),
+        //? Arrow top left
         Positioned(
           top: isMobile ? 35 : 0,
           left: 10,

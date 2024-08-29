@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:snackautomat_24/frontend/screens/game_screen/widgets/custom_bottom_appbar_button.dart';
+import 'package:snackautomat_24/frontend/screens/game/widgets/custom_bottom_appbar_button.dart';
 
 class CustomBottomAppBar extends StatelessWidget {
   const CustomBottomAppBar({super.key});

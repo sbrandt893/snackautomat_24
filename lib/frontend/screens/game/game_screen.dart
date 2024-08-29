@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:snackautomat_24/backend/models/game_state.dart';
-import 'package:snackautomat_24/frontend/screens/game_screen/pages/downtown.dart';
-import 'package:snackautomat_24/frontend/screens/game_screen/pages/new_vending_machine_closeup.dart';
-import 'package:snackautomat_24/frontend/screens/game_screen/pages/uptown.dart';
-import 'package:snackautomat_24/frontend/screens/game_screen/widgets/custom_bottom_appbar.dart';
+import 'package:snackautomat_24/frontend/screens/game/pages/downtown.dart';
+import 'package:snackautomat_24/frontend/screens/game/pages/new_vending_machine_closeup.dart';
+import 'package:snackautomat_24/frontend/screens/game/pages/uptown.dart';
+import 'package:snackautomat_24/frontend/screens/game/widgets/custom_bottom_appbar.dart';
 import 'package:snackautomat_24/logic/provider/all_provider.dart';
 
 enum Pages {
@@ -59,12 +59,12 @@ class _HomeScreenState extends ConsumerState<GameScreen> {
 Widget _getPageFromIndex(int index) {
   switch (Pages.values[index]) {
     case Pages.uptown:
-      return const Uptown();
+      return Uptown();
     case Pages.downtown:
       return const Downtown();
     case Pages.newVendingMachineCloseup:
       return const NewVendingMachineCloseup();
     default:
-      return const Uptown();
+      return Uptown();
   }
 }

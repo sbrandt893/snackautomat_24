@@ -40,8 +40,8 @@ class SlotContainer {
     Map<String, Slot>? slots,
   }) {
     return SlotContainer._internal(
-      slotRows: this.slotRows,
-      slotCols: this.slotCols,
+      slotRows: slotRows,
+      slotCols: slotCols,
       slots: slots ?? this.slots.map((key, value) => MapEntry(key, value.copyWith())),
     );
   }
